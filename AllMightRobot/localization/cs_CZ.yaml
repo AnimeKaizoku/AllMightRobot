@@ -71,9 +71,13 @@ STRINGS:
   filters:
     no_filters_found: "Nebyly nalezeny žádné filtry v <b>{chat_name}</b>!"
     #/addfilter
+    anon_detected: Being anonymous admin, you cannot add new filters, use connections instead.
+    regex_too_slow: "Your regex pattern is matching too slow (more than the half of second), it can't be added!"
+    cancel_btn: "🛑 Cancel"
     adding_filter: |
       Přidávání filtru <code>{handler}</code> do <b>{chat_name}</b>
       Vyberte akci níže:
+    saved: "New filter was successfully saved!"
     #/filters
     list_filters: "Filtry v <b>{chat_name}</b>:\n"
     #/delfilter
@@ -82,6 +86,12 @@ STRINGS:
     select_filter_to_remove: |
       Našla jsem mnoho filtrů s manipulátorem '<code>{handler}</code>'.
       Prosím vyberte jeden pro odstranění:
+    #/delfilters or /delallfilters
+    not_chat_creator: Only chat creators can use this command!
+    delall_header: This would delete all filters in this chat. This IS irreversible.
+    confirm_yes: '⚠ Delete all'
+    confirm_no: '❌ Cancel'
+    delall_success: Successfully deleted all ({count}) filters in this chat!
   warns:
     #/warn
     warn_sofi: "Haha nemůžeš mě varovat!"
@@ -91,8 +101,8 @@ STRINGS:
     warn_bun: "Počet upozornění byl překročen! {user} byl zabanován!"
     warn_num: "Varování: {curr_warns}/{max_warns}\n"
     warn_rsn: "Důvod: <code>{reason}</code>\n"
-    max_warn_exceeded: Počet upozornění byl překročen! %s byl %s!
-    "max_warn_exceeded:tmute": Počet upozornění byl překročen! %s byl umlčen na %s!
+    max_warn_exceeded: Warnings has been exceeded! {user} has been {action}!
+    "max_warn_exceeded:tmute": Warnings has been exceeded! {user} has been tmuted for {time}!
     #warn rmv callback
     warn_no_admin_alert: "⚠ NEJSI admin, aby jsi mohl odstranit varování!"
     warn_btn_rmvl_success: "✅ Varování odstraněno uživatelem {admin}!"
@@ -118,7 +128,8 @@ STRINGS:
     wrng_args: |
       Toto jsou dostupné možnosti:
       <code>%s</code>
-    mode_info: 'Aktuální režim v tomto chatu je <b>%s</b>.'
+    mode_info: |
+      Aktuální režim v tomto chatu je <b>%s</b>.
     banned: zabanován
     muted: ztlumen
     filters_title: Varovat uživatele
@@ -136,13 +147,11 @@ STRINGS:
     conn_chat_id: "ID aktuálně připojeného chatu: <code>{id}</code>"
     help_btn: "Klikni na mě pro nápovědu!"
     help_txt: "Pro pomoc klikněte na tlačítko níže!"
-    paste_success_extra: "<b>Úspěšně vloženo!</b>\nZkrácená url: {}\nPůvodní Dogbin URL: {}"
-    paste_success: "<b>Úspěšně vloženo!</b>\nDogbin URL: {}"
-    paste_fail: "Nepodařilo se připojit k Dogbinu!"
-    paste_no_text: "Nedodali jste text pro vložení!"
     delmsg_filter_title: 'Odstraň zprávu'
     send_text: Pošli prosím odpověď!
     replymsg_filter_title: 'Odpověz na zprávu'
+    send_customised_reason: Send the <i>reason</i> you want to include in action message. "<code>None</code>" for <i>no reason</i> to be given!
+    expected_text: Expected a text message!
   promotes:
     promote_success: "{user} byl úspěšně povýšen v {chat_name}!"
     promote_title: "\nS vlastní rolí <code>{role}</code>!"
@@ -157,13 +166,15 @@ STRINGS:
     start_hi_group: 'Ahoj! Mé jméno je AllMight'
     start_hi: "Ahoj! Mé jméno je AllMight, pomáhám ti efektivně spravovat skupinu!"
     btn_help: "❔nápověda"
+    btn_add: "➕ Add me to your chat"
     btn_lang: "👅Jazyk"
     btn_chat: "👥 Skupina AllMight"
     btn_channel: "📡novinky o AllMight"
     back: Zpět
     #/help
-    help_header: Ahoj! Podívejte se na naši wiki pro nápovědu
+    help_header: "Hey! My name is <b>AllMight</b>. I am a group management bot, here to help you get around and keep the order in your groups!\nI have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords."
     click_btn: Klikni zde
+    btn_group_help: "Click me for help!"
   disable:
     #/disableable
     disablable: "<b>příkazy které je možno zakázat:</b>\n"
@@ -201,11 +212,12 @@ STRINGS:
     can_only_1_fed: "1 uživatel může vytvořit pouze 1 federaci, prosím odeberte jednu."
     name_not_avaible: "Federace s názvem <code>{name}</code> již existuje! Použijte prosím jiný název."
     created_fed: |
-      Gratuluji, úspěšně jste vytvořili Federaci.
-      <b>Název:</b> {name}
+      Congrats, you have successfully created Federation.
+      <b>Name:</b> {name}
       <b>ID:</b> <code>{id}</code>
-      <b>Tvůrce:</b> {creator}
-      Použij <code>/fjoin {id}</code> k připojení federace k chatu
+      <b>Creator:</b> {creator}
+      Use <code>/fjoin {id}</code> to connect federation to chat\
+    disallow_anon: Being anonymous, you cannot create new federation!
     #/fjoin
     only_creators: "Musíte být tvůrcem chatu, abyste mohli připojit chat k federaci."
     fed_id_invalid: "Dané ID federace je neplatné! Prosím, dejte mi platné ID."
@@ -260,6 +272,7 @@ STRINGS:
       <b>sledování zakázáno</b> #LoggingDisabled
       <b>Fed:</b> {fed_name} (<code>{fed_id}</code>)
     #/fchatlist
+    no_chats: "There's no chats joined this <b>{name}</b> Federation"
     chats_in_fed: "<b>Chaty připojené k {name} Federaci:</b>\n"
     too_large: "Výstup je příliš velký, odesílám ho jako soubor"
     #/finfo
@@ -282,7 +295,8 @@ STRINGS:
     update_fban: "Tento uživatel byl již federačně zabanován již předtím a proto aktualizuji důvod banu na <code>{reason}</code>"
     already_fbanned: "{user} je již v této federaci zabanován."
     fbanned_header: "<b>Nový Federační Ban</b>\n"
-    fban_info: '|#ChatLeaved <b>Federace:</b> {fed} <b>Federační admin:</b> {fadmin} <b>Uživatel:</b> {user} (<code>{user_id}</code>)'
+    fban_info: |
+      |#ChatLeaved <b>Federace:</b> {fed} <b>Federační admin:</b> {fadmin} <b>Uživatel:</b> {user} (<code>{user_id}</code>)
     fbanned_reason: "<b>Důvod:</b> <code>{reason}</code>"
     fbanned_process: "\n<b>Stav:</b> Banuji v <code>{num}</code> federačních chatech..."
     fbanned_done: "\n<b>Stav:</b> Hotovo! zabanován v <code>{num}</code> chatech!"
@@ -355,13 +369,14 @@ STRINGS:
     fbanned_count_pm: "Jste federačně zabanován ve {count} federaci/federacích!\n"
     "fban_info:fcheck": "Byli jste zabanováni ve {fed} federaci dne {date}, žádný důvod, nebyl udán!"
     "fban_info:fcheck:reason": "Byl jste zabanován ve federaci {fed} dne {date} protože {reason}\n"
-    fbanned_data: "{user} byl zabanován v {count} federaci/federacích\n"
+    fbanned_data: "{user} has been fbanned in {count} federation(s).\n"
     fbanned_nowhere: "{user} nikde není federačně zabanovaný!"
     fbanned_in_fed: "Včetně této <b>{fed}</b> federace!\n"
     "fbanned_in_fed:reason": "Včetně této <b>{fed}</b> federace z důvodu -\n <code>{reason}</code>"
     contact_in_pm: "\n\nPro více informací o vašich federačních banech mi prosím zašlete přímou zprávu, tím zajistíme vaše soukromí!"
     too_long_fbaninfo: "Jasně, tvoje info o federačních banech vyžaduje soubor!"
     didnt_fbanned: "Nejste federačně zabanován v této federaci."
+    not_fbanned_in_fed: Anyway, they aren't fbanned in fed <b>{fed_name}</b>
   reports:
     user_user_admin: "Jste admin, proč, proč byste měli někoho nahlašovat?.. A komu taky?.."
     user_is_whitelisted: "Jste uživatel na bílé listině, proč byste měl někoho nahlašovat?.."
@@ -383,7 +398,7 @@ STRINGS:
     select_pm_lang: "\n<b>Vyberte nový jazyk:</b>"
     select_chat_lang: "\n<b>Vyberte nový jazyk chatu:</b>"
     crowdin_btn: "🌎 Pomozte nám s překladem"
-    help_us_translate: "\n\n<a href=\"https://crowdin.com/project/AllMightbot\">🌎 Pomozte nám vylepšit překlad do různých jazyků</a>"
+    help_us_translate: "\n\n<a href=\"https://crowdin.com/project/sophiebot\">🌎 Help us improve languages</a>"
     not_supported_lang: Vybraný jazyk není podporován!
     lang_changed: Jazyk byl změněn na <b>{lang_name}</b>.
     see_translators: '👥 podívejte se na překladatelé'
@@ -396,6 +411,11 @@ STRINGS:
       <b>Aktuálně připojený chat:</b>
       {chat_name}
       Zapište /disconect pro odpojení od chatu
+    "connected_chat:cmds": |
+      <b>Current connected chat:</b>
+      {chat_name}, (bridged commands are {commands}),
+      ⚠ <i>You can only access bridged commands of the connected chat! all other commands would be treated as Local chat</i>
+      Write /disconect to disconnect from chat.
     u_wasnt_connected: "Předtím jste nebyl připojen k žádnému chatu!"
     select_chat_to_connect: "\n<b>Vyberte chat pro připojení:</b>"
     disconnected: "Byli jste odpojeni od <b>{chat_name}</b>."
@@ -411,16 +431,22 @@ STRINGS:
     not_in_chat: "Už nejste v tomto chatu, odpojím vás."
     u_should_be_admin: "Měl bys být správcem v {}!"
     usage_only_in_groups: "Použití omezeno pouze ve skupinách!"
+    anon_admin_conn: |
+      Please click below button to connect!
+    click_here: Click here!
   global:
     u_not_admin: Měli byste být admin aby jste to mohl udělat!
     #Rights
     "bot_no_right:not_admin": Nejsem správce!
-    bot_no_right: "Nemám k tomu potřebné oprávnění! \nChybějící oprávnění: <b>%s</b>"
-    user_no_right: "Musíte mít vyžadované oprávnění, aby jste to mohli udělat! \nChybějící oprávnění: <b>%s</b>"
+    bot_no_right: "I dont have permission to {permission} here!"
+    user_no_right: "You don't have permission to {permission} here!"
     "user_no_right:not_admin": Musíte být admin, aby jste to mohli udělat!
+    #is chat creator
+    unable_identify_creator: "Unable to identify anonymous chat creator, duplicate signature (titles) found!"
   owner_stuff:
     father: "\nJe to můj tvůrce."
     sudo_crown: "\nHej! Podívejte, ten uživatel má korunu, nechte mě se podívat... Wow, to bylo úžasné - <b>'sudo user'</b>!"
+    dev: "\nHey! Look, that user has a crown, let me see it... Wow, it has an engraving - <b>'dev user'</b>!"
   stickers:
     rpl_to_sticker: "Odpovězte na nálepku!"
     ur_sticker: |
@@ -457,7 +483,7 @@ STRINGS:
     big_file: Podporován import souborů pouze pod 50 MB!
     started_importing: Probíhá import! Počkejte prosím...
     bad_file: Špatný soubor! Očekáván <code>'general'</code> column.
-    file_version_so_new: Exportovaná verze souboru je novější než AllMight aktuálně podporuje!
+    file_version_so_new: Exported file version is newer than Sophie currently supports!
     imports_locked: Počkejte prosím %s než budete moci importovat znovu!
     import_done: Import dokončen!
   restrictions:
@@ -565,11 +591,19 @@ STRINGS:
     welcomemute_disabled: Uvítací umlčení zakázáno v <b>%s</b>
     welcomemute_status: Uvítací umlčení <code>{status}</code> v <b>{chat_name}</b>
     #/welcomesecurity
-    welcomesecurity_enabled: Uvítací zabezpečení povoleno v <b>{chat_name}</b> na úrovni <code>{level}</code>.
+    welcomesecurity_enabled: Welcome security enabled in <b>{chat_name}</b> to <code>{level}</code>.
+    "welcomesecurity_enabled:customized_time": |
+      Welcome security enabled in <b>{chat_name}</b> to <code>{level}</code>, and kick users which aren't verified within {time}.
+    ask_for_time_customization: |
+      Do you want to customize the time period to kick unverified user? (by default it's {time})
+    send_time: Please send time.
+    invalid_time: "Invalid time!"
     welcomesecurity_enabled_word: povoleno, nastaveno na úroveň {level}
     welcomesecurity_disabled: Uvítací zabezpečení zakázáno v <b>%s</b>.
     welcomesecurity_invalid_arg: Neplatný argument, očekáváno <code>tlačítko</code>/<code>captcha</code>.
     welcomesecurity_status: Uvítací bezpečnost <code>{status}</code> v <b>{chat_name}</b>
+    yes_btn: "Yes"
+    no_btn: "No"
     #Welcomesecurity handler
     click_here: Klikněte zde!
     not_allowed: Nejste oprávněni toto používat!
@@ -593,20 +627,8 @@ STRINGS:
     #/resetwelcome
     deleted: Pozdravy úspěšně resetovány v <b>{chat}</b>!
     not_found: Není co resetovat!
-    #/welcomerestrict
-    del_url: Zpráva obsahující URL od {user} byla smazána!
-    del_fwd: Přeposlaná zpráva od {user} byla smazána!
-    del_media: Zpráva obsahující média od {user} byla smazána!
-    banned: '{by} zabanován {user}!'
-    whitelisted: '{by} na bílé listině {user}!'
-    enabled_sucessfully: Zabezpečení chatu bylo úspěšně zapnuto v <b>{chat}</b>
-    disabled_sucessfully: Zabezpečení chatu bylo úspěšně vypnuto v <b>{chat}</b>
-    already_enabled: Zabezpečení chatu je již zapnuto!
-    already_disabled: Zabezpečení chatu je již vypnuto!
-    restrict_status: Uvítací omezení je <b>{state}</b> v <b>{chat}</b>!
-    unkown_option: Prosím dejte mi platnou možnost! (<code>povolit</code> nebo <code>zakázat</code>)
-    whitelist: '🏳️ Whitelist'
-    ban: '❌ Ban'
+    #...
+    verification_done: Verification is done! You have been unmuted.
   locks:
     locks_header: "Zde je aktuální nastavení uzamčení v {chat_title} \n\n"
     no_lock_args: Dej mi nějaké argumenty pro zamknutí!
@@ -616,3 +638,25 @@ STRINGS:
     no_unlock_args: Dejte mi nějaké argumenty k odemknutí!
     not_locked: Kámo, to není zamčené, nepotřebuješ to odemykat.
     unlocked_successfully: '{lock} v {chat} byl úspěšně odemčen!'
+  antiflood:
+    #enforcer
+    flood_exceeded: "{action} {user} for flooding!"
+    #/setflood
+    "invalid_args:setflood": "Expected an integer!"
+    overflowed_count: Maximum count should be less than 200!
+    config_proc_1: Please send expiration time, '0' (zero) for not being expired.
+    cancel: '❌ Cancel'
+    setup_success: Successfully configured antiflood, now enforces against those who sends {count} messages within {time}!
+    "setup_success:no_exp": Successfully configured antiflood, allows {count} messages consecutively!
+    invalid_time: Invalid time!
+    #/antiflood | /flood
+    not_configured: Antiflood isn't configured in this chat yet!
+    turned_off: Disabled antiflood in <b>{chat_title}</b>!
+    "configuration_info:with_time": Antiflood is configured in this chat, those who sents {count} message within {time} would be {action}!
+    configuration_info: Antiflood is configured in this chat, those who sents {count} consecutively would be {action}!
+    ban: banned
+    mute: muted
+    kick: kicked
+    #/setfloodaction
+    invalid_args: "Unsupported action, expected {supported_actions}!"
+    setfloodaction_success: "Successfully updated flood action to <b>{action}</b>!"

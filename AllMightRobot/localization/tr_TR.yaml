@@ -71,9 +71,13 @@ STRINGS:
   filters:
     no_filters_found: "<b>{chat_name}</b> içerisinde filtre bulunamadı!"
     #/addfilter
+    anon_detected: Being anonymous admin, you cannot add new filters, use connections instead.
+    regex_too_slow: "Your regex pattern is matching too slow (more than the half of second), it can't be added!"
+    cancel_btn: "🛑 İptal"
     adding_filter: |
       <b>{chat_name}</b> içinde <code>{handler}</code> filtresi ekleme
       Aşağıdaki işlemi seçin:
+    saved: "New filter was successfully saved!"
     #/filters
     list_filters: "<b>{chat_name}</b> grubundaki filtreler:\n"
     #/delfilter
@@ -82,6 +86,12 @@ STRINGS:
     select_filter_to_remove: |
       '<code>{handler}</code>' işleyicisine sahip birçok filtre buldum.
       Lütfen kaldırmak için birini seçin:
+    #/delfilters or /delallfilters
+    not_chat_creator: Only chat creators can use this command!
+    delall_header: This would delete all filters in this chat. This IS irreversible.
+    confirm_yes: '⚠ Delete all'
+    confirm_no: '❌ Cancel'
+    delall_success: Successfully deleted all ({count}) filters in this chat!
   warns:
     #/warn
     warn_sofi: "Haha, kendimi uyarmanın bir yolu yok!"
@@ -91,8 +101,8 @@ STRINGS:
     warn_bun: "Uyarı sınırı aşıldı! {user} yasaklandı!"
     warn_num: "Mevcut uyarılar: {curr_warns}/{max_warns}\n"
     warn_rsn: "Sebep: <code>{reason}</code>\n"
-    max_warn_exceeded: Uyarılar aşıldı! %s %s oldu!
-    "max_warn_exceeded:tmute": Uyarılar aşıldı! %s, %s için açıldı!
+    max_warn_exceeded: Warnings has been exceeded! {user} has been {action}!
+    "max_warn_exceeded:tmute": Warnings has been exceeded! {user} has been tmuted for {time}!
     #warn rmv callback
     warn_no_admin_alert: "⚠ Uyarıyı kaldırmak için yönetici DEĞİLSİNİZ!"
     warn_btn_rmvl_success: "✅ Uyarı {admin} tarafından kaldırıldı !"
@@ -118,7 +128,8 @@ STRINGS:
     wrng_args: |
       Mevcut seçenekler şunlardır:
       <code>%s</code>
-    mode_info: 'Bu sohbetteki geçerli mod <b>%s</b>.'
+    mode_info: |
+      Bu sohbetteki geçerli mod <b>%s</b>.
     banned: yasaklandı
     muted: susturuldu
     filters_title: Kullanıcıyı uyar
@@ -136,13 +147,11 @@ STRINGS:
     conn_chat_id: "Geçerli bağlanmış olan sohbet kimliği: <code>{id}</code>"
     help_btn: "Yardım için tıkla!"
     help_txt: "Yardım için aşağıdaki düğmeye tıklayın!"
-    paste_success_extra: "<b>Başarıyla yapıştırıldı!</b>\nKısaltılmış link: {}\nOrijinal doglin linki: {}"
-    paste_success: "<b>Başarıyla yapıştırıldı!</b>\nDogbin linki: {}"
-    paste_fail: "Dogbin'e ulaşılamadı!"
-    paste_no_text: "Yapıştırmak için bir metin girmeniz gerekiyor!"
     delmsg_filter_title: 'Mesajı sil'
     send_text: Lütfen cevap mesajını gönderin!
     replymsg_filter_title: 'Mesaja cevap verin'
+    send_customised_reason: Send the <i>reason</i> you want to include in action message. "<code>None</code>" for <i>no reason</i> to be given!
+    expected_text: Expected a text message!
   promotes:
     promote_success: "{user}, {chat_name} içinde başarıyla yükseltildi!"
     promote_title: "Özel rol <code>{role}</code> ile!"
@@ -157,13 +166,15 @@ STRINGS:
     start_hi_group: 'Selam! Benim adım AllMight'
     start_hi: "Selam! Adım AllMight, grubunuzu verimli bir şekilde yönetmenize yardım ediyorum!"
     btn_help: "❔ Yardım"
+    btn_add: "➕ Add me to your chat"
     btn_lang: "🇹🇷 Dil"
     btn_chat: "👥 AllMight Grubu"
     btn_channel: "📡 AllMight Kanalı"
     back: Geri
     #/help
-    help_header: Hey! Yardım için wiki sayfamıza göz atın
+    help_header: "Hey! My name is <b>AllMight</b>. I am a group management bot, here to help you get around and keep the order in your groups!\nI have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords."
     click_btn: Buraya tıklayın
+    btn_group_help: "Click me for help!"
   disable:
     #/disableable
     disablable: "<b>Devredışı bırakılabilen komutlar:</b>\n"
@@ -201,11 +212,12 @@ STRINGS:
     can_only_1_fed: "1 kullanıcı sadece 1 Federasyon oluşturabilir, lütfen birini kaldırın."
     name_not_avaible: "<code>{name}</code> isimli federasyon zaten mevcut! Lütfen başka bir ad kullanın."
     created_fed: |
-      Tebrikler, Federasyon'u başarıyla oluşturdunuz.
-      <b>İsim:</b> {name}
+      Congrats, you have successfully created Federation.
+      <b>Name:</b> {name}
       <b>ID:</b> <code>{id}</code>
-      <b>Oluşturan:</b> {creator}
-      <code>/fjoin {id}</code> federasyonu sohbete bağlama için bu komutu kullanın
+      <b>Creator:</b> {creator}
+      Use <code>/fjoin {id}</code> to connect federation to chat\
+    disallow_anon: Being anonymous, you cannot create new federation!
     #/fjoin
     only_creators: "Sohbeti federasyona bağlayabilmek için bir sohbet yaratıcısı olmalısınız."
     fed_id_invalid: "Belirtilen Federasyon Kimliği geçersiz! Lütfen bana geçerli bir kimlik verin."
@@ -260,6 +272,7 @@ STRINGS:
       <b>Devre dışı bırakılan günlük kaydı</b> #GünlükKaydıDevreDışı
       <b>Federasyon:</b> {fed_name} (<code>{fed_id}</code>)
     #/fchatlist
+    no_chats: "There's no chats joined this <b>{name}</b> Federation"
     chats_in_fed: "<b>Sohbet {name} Örgüt'üne bağlandı:</b>\n"
     too_large: "Çıktı çok büyük, dosya olarak gönderiliyor"
     #/finfo
@@ -279,9 +292,11 @@ STRINGS:
     fban_self: "Bu güzel bir şov!"
     fban_creator: "Federasyon sahibini nasıl yasaklayabilirim?! Komik olacağını sanmıyorum."
     fban_fed_admin: "Bir federasyon yöneticisini kendi federasyonundan yasaklayamam!"
+    update_fban: "This user was fbanned earlier therefore I am updating reason to <code>{reason}</code>"
     already_fbanned: "{user} bu federasyonda zaten yasaklanmıştı."
     fbanned_header: "<b>Yeni FedBan</b>\n"
-    fban_info: '| #ChatLeaved <b>Federasyon:</b>{fed}<b>Federasyon yöneticisi:</b>{fadmin}<b>Kullanıcı:</b>{user}(<code>{user_id}</code>)'
+    fban_info: |
+      | #ChatLeaved <b>Federasyon:</b>{fed}<b>Federasyon yöneticisi:</b>{fadmin}<b>Kullanıcı:</b>{user}(<code>{user_id}</code>)
     fbanned_reason: "<b>Nedeni:</b> <code>{reason}</code>"
     fbanned_process: "<b>Durum:</b> <code>{num}</code> adet federasyon sohbetlerinden yasaklanıyor..."
     fbanned_done: "<b>Durum:</b> Bitti! <code>{num}</code> adet federasyon sohbetlerinden yasaklandı!"
@@ -341,6 +356,7 @@ STRINGS:
     big_file_json: |
       Şu anda json dosyaları {num} Megabyte ile sınırlıdır!
       Daha büyük dosyaları içe aktarmak istiyorsanız bir csv biçimi kullanın.
+    invalid_file: "The file is invalid"
     wrong_file_ext: "Hatalı dosya biçimi! Şu anda destek verilen dosya türleri: json, csv"
     importing_process: <b>Federasyon yasakları içe aktarılıyor...</b>
     import_done: Federasyon yasaklarının içe aktarılması tamamlandı! {num} yasak içe aktarıldı.
@@ -353,13 +369,14 @@ STRINGS:
     fbanned_count_pm: "{count} federasyon(lar) da yasaklandınız!"
     "fban_info:fcheck": "{date} tarihinde {fed} federasyonundan yasaklandınız, hiçbir neden belirtilmedi!"
     "fban_info:fcheck:reason": "{reason} nedeniyle {date} tarihinde {fed} federasyonundan yasaklandınız"
-    fbanned_data: "{user}, {count} federasyon(lar) dan yasaklandı"
+    fbanned_data: "{user} has been fbanned in {count} federation(s).\n"
     fbanned_nowhere: "{user} hiçbir yerde yasaklanmadı!"
     fbanned_in_fed: "Bu <b>{fed}</b> federasyonunu da içeriyor!"
     "fbanned_in_fed:reason": "Bu <b>{fed}</b> federasyonunu -\n <code>{reason}</code>"
     contact_in_pm: "Fbanlarınız hakkında daha fazla bilgi için lütfen bana doğrudan mesaj gönderin, böylece gizliliğiniz güvence altına alınır!"
     too_long_fbaninfo: "İyi! fbaninfo bir dosya gerektirir!"
     didnt_fbanned: "Bu federasyonda yasaklanmadın."
+    not_fbanned_in_fed: Anyway, they aren't fbanned in fed <b>{fed_name}</b>
   reports:
     user_user_admin: "Sen burada bir yöneticisin, neden birini rapor etmek istiyorsun?.."
     user_is_whitelisted: "Sen beyaz listeye alınmış bir kullanıcısın, neden birini rapor etmek istiyorsun?.."
@@ -381,7 +398,7 @@ STRINGS:
     select_pm_lang: "<b>Yeni dilinizi seçin:</b>"
     select_chat_lang: "<b>Yeni sohbet dili seçin:</b>"
     crowdin_btn: "🌎 Çeviri konusunda bize yardımcı olun"
-    help_us_translate: "<a href=\"https://crowdin.com/project/AllMightbot\">🌎 Dilleri geliştirmemize yardımcı olun</a>"
+    help_us_translate: "\n\n<a href=\"https://crowdin.com/project/sophiebot\">🌎 Help us improve languages</a>"
     not_supported_lang: Bu dil desteklenmiyor!
     lang_changed: Dil <b>{lang_name}</b> olarak değiştirildi.
     see_translators: '👥 Çevirenleri gör'
@@ -394,6 +411,11 @@ STRINGS:
       <b>Geçerli bağlı sohbet:</b>
       {chat_name}
       Sohbet bağlantısını kesmek için /disconnect yazın
+    "connected_chat:cmds": |
+      <b>Current connected chat:</b>
+      {chat_name}, (bridged commands are {commands}),
+      ⚠ <i>You can only access bridged commands of the connected chat! all other commands would be treated as Local chat</i>
+      Write /disconect to disconnect from chat.
     u_wasnt_connected: "Daha önce hiçbir sohbete bağlanmadın!"
     select_chat_to_connect: "<b>Bağlanmak için bir sohbet seçin:</b>"
     disconnected: "<b> {chat_name}</b> ile bağlantınız kesildi."
@@ -409,16 +431,22 @@ STRINGS:
     not_in_chat: "Sen artık bu sohbette değilsin, bağlantını keseceğim."
     u_should_be_admin: "{} grubunda yönetici olmalısın!"
     usage_only_in_groups: "Gruplarda kullanım sınırlandı!"
+    anon_admin_conn: |
+      Please click below button to connect!
+    click_here: Click here!
   global:
     u_not_admin: Bunu yapmak için yönetici olmalısınız!
     #Rights
     "bot_no_right:not_admin": Yönetici değilim!
-    bot_no_right: "Bunu yapmak için gerekli iznim yok!\nEksik izin(ler): <b>%s</b>"
-    user_no_right: "Bunu yapmak için gerekli izne sahip olmalısınız!\nEksik izin(ler): <b>%s</b>"
+    bot_no_right: "I dont have permission to {permission} here!"
+    user_no_right: "You don't have permission to {permission} here!"
     "user_no_right:not_admin": Bunu yapmak için yönetici olmalısınız!
+    #is chat creator
+    unable_identify_creator: "Unable to identify anonymous chat creator, duplicate signature (titles) found!"
   owner_stuff:
     father: "\nİşte benim yaratıcım."
     sudo_crown: "Hey! Bak, o kullanıcının bir tacı var, bir bakayım... Vay, bir gravür var - <b>'sudo kullanıcısı'</b>!"
+    dev: "\nHey! Look, that user has a crown, let me see it... Wow, it has an engraving - <b>'dev user'</b>!"
   stickers:
     rpl_to_sticker: "Bir çıkartmaya yanıt verin!"
     ur_sticker: |
@@ -449,12 +477,13 @@ STRINGS:
     export_done: <b>{chat_name}</b> 'den dışa aktarma bitti!
     exports_locked: Lütfen dışa aktarmayı tekrar kullanabilmek için %s süre zarfında bekleyin!
     #Importing
+    invalid_file: "The file is invalid"
     send_import_file: Lütfen bir içe aktarma dosyası gönderin!
     rpl_to_file: Lütfen bir dosyaya cevap verin!
     big_file: Yalnızca 50 MB'ın altındaki dosyaları içe aktarma desteklenir!
     started_importing: İçe aktarma başladı! Lütfen bekle...
     bad_file: Bozuk dosya! Beklenen <code>'genel'</code> sütunu.
-    file_version_so_new: Dışa aktarılan dosya sürümü AllMight'nin şu anda desteklediğinden daha yeni!
+    file_version_so_new: Exported file version is newer than Sophie currently supports!
     imports_locked: Lütfen içe aktarmayı tekrar kullanabilmek için %s süre zarfında bekleyin!
     import_done: İçe aktarma tamamlandı!
   restrictions:
@@ -564,11 +593,19 @@ STRINGS:
     welcomemute_disabled: <b>%s</b> içinde karşılama susturması devre dışı bırakıldı
     welcomemute_status: Karşılama susturması <b>{chat_name}</b> sohbeti için <code>{status}</code>
     #/welcomesecurity
-    welcomesecurity_enabled: Karşılama güvenliği <b>{chat_name}</b> 'da <code>{level}</code>. seviyeye etkinleştirildi.
+    welcomesecurity_enabled: Welcome security enabled in <b>{chat_name}</b> to <code>{level}</code>.
+    "welcomesecurity_enabled:customized_time": |
+      Welcome security enabled in <b>{chat_name}</b> to <code>{level}</code>, and kick users which aren't verified within {time}.
+    ask_for_time_customization: |
+      Do you want to customize the time period to kick unverified user? (by default it's {time})
+    send_time: Please send time.
+    invalid_time: "Invalid time!"
     welcomesecurity_enabled_word: etkinleştirildi, {level}. seviye düzeyine ayarlandı
     welcomesecurity_disabled: Karşılama güvenliği <b>%s</b> içinde devre dışı bırakıldı.
     welcomesecurity_invalid_arg: Geçersiz argüman, beklenen <code>button</code>/<code>captcha</code>.
     welcomesecurity_status: Karşılama güvenliği <b>{chat_name}</b> sohbeti için <code>{status}</code>
+    yes_btn: "Yes"
+    no_btn: "No"
     #Welcomesecurity handler
     click_here: Buraya tıklayın!
     not_allowed: Bunu kullanma izniniz yok!
@@ -592,20 +629,8 @@ STRINGS:
     #/resetwelcome
     deleted: <b>{chat}</b> 'de karşılama mesajı başarıyla sıfırlandı!
     not_found: Sıfırlanacak bir şey yok!
-    #/welcomerestrict
-    del_url: '{user} ''dan URL içeren mesaj silindi!'
-    del_fwd: '{user} adlı kullanıcıdan iletilen mesaj silindi!'
-    del_media: '{user} kullanıcısından medya içeren mesaj silindi!'
-    banned: '{by} tarafından yasaklandı {user}!'
-    whitelisted: '{by} beyaz listeye eklenen {user}!'
-    enabled_sucessfully: Sohbet güvenliği <b>{chat}</b> 'de başarıyla etkinleştirildi
-    disabled_sucessfully: Sohbet güvenliği <b>{chat}</b> 'de başarıyla devre dışı bırakıldı
-    already_enabled: Sohbet güvenliği zaten etkinleştirildi!
-    already_disabled: Sohbet güvenliği zaten devre dışı bırakıldı!
-    restrict_status: Karşılama kısıtlaması <b>{chat}</b> sohbeti için <b>{state}</b>!
-    unkown_option: Lütfen bana geçerli bir seçenek verin! (<code>etkinleştir</code> veya <code>devre dışı</code>)
-    whitelist: '🏳️ Beyaz Liste'
-    ban: '❌ Yasakla'
+    #...
+    verification_done: Verification is done! You have been unmuted.
   locks:
     locks_header: "{chat_title} içindeki mevcut kilit ayarları"
     no_lock_args: Kilitlemem için bana birkaç argüman ver!
@@ -615,43 +640,25 @@ STRINGS:
     no_unlock_args: Kilidi açmam için bana birkaç argüman ver!
     not_locked: Kilidini açacağım bir şey yok.
     unlocked_successfully: '{chat} içinde {lock} kilidi başarıyla açıldı!'
-RANDOM_STRINGS:
-  RUNS:
-    - "Hayırrrrrrrrrr!.."
-    - "Ağlaycam"
-    - "Efendim, neden?"
-    - "Neden bunu yapıyorsun? Ağlıyorum."
-    - "Birisi gerçekten bu dizeleri benim için yazdı ;_;"
-    - "Alexa, play Despacito!"
-    - "Yapılacaklar: BU DİZEYİ YAZ."
-    - "Lütfen efendim :("
-    - "Bekle, ah, dur... sticker atamıyorum ;_;"
-    - "/runs"
-    - "Miyav! 😺"
-    - "/cat komutunu dene"
-    - "Tek dostum Rose"
-    - "Tek dostum Yana"
-    - "Sana yeni şakalar göndereceğimi düşünüyorsan - yanılıyorsun, yapmayacağım!"
-    - "NaytSeYd 1 NuMaRA"
-    - "OwO"
-    - "?_?"
-    - "Herhangi bir yarış var mı?"
-    - "Erişim reddedildi!!"
-    - "Tamam kaçıyorsun ve ne kadar süre yapabileceğini görüyorum.."
-    - "Bu çok epik"
-    - "Bu daha da epik!!"
-    - "Ben çok fakirim... :("
-    - "Selamlar"
-    - "Sen bir sihirb- Oh. Bekle. Sen Harry değilsin, devam et."
-    - "Sevimlisin"
-    - ">~<"
-    - "@admins lütfen <code>/disable /runs</code>"
-    - "Spam spam spam spam spam"
-    - "Beyler çeviri için o kadar uğraştık bi like atarsınız artık"
-    - "Belki şans sana güler."
-    - "Bunu yaptığına pişman olacaksın..."
-    - Ben makineyim
-    - Asla uyumam
-    - Gözlerimi açık tutuyorum
-    - Ben robotum
-    - Keşke bir şeyler hissedebilseydim
+  antiflood:
+    #enforcer
+    flood_exceeded: "{action} {user} for flooding!"
+    #/setflood
+    "invalid_args:setflood": "Expected an integer!"
+    overflowed_count: Maximum count should be less than 200!
+    config_proc_1: Please send expiration time, '0' (zero) for not being expired.
+    cancel: '❌ Cancel'
+    setup_success: Successfully configured antiflood, now enforces against those who sends {count} messages within {time}!
+    "setup_success:no_exp": Successfully configured antiflood, allows {count} messages consecutively!
+    invalid_time: Invalid time!
+    #/antiflood | /flood
+    not_configured: Antiflood isn't configured in this chat yet!
+    turned_off: Disabled antiflood in <b>{chat_title}</b>!
+    "configuration_info:with_time": Antiflood is configured in this chat, those who sents {count} message within {time} would be {action}!
+    configuration_info: Antiflood is configured in this chat, those who sents {count} consecutively would be {action}!
+    ban: banned
+    mute: muted
+    kick: kicked
+    #/setfloodaction
+    invalid_args: "Unsupported action, expected {supported_actions}!"
+    setfloodaction_success: "Successfully updated flood action to <b>{action}</b>!"
